@@ -6,7 +6,7 @@
 .externalNativeBuild
 .cxx
 local.properties
-
+app.log
 
 HELP.md
 build/
