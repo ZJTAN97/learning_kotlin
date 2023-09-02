@@ -11,40 +11,71 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("api/v1/tasks")
-class TaskController(private val service: TaskService) {
+class TaskController(
+    private val service: TaskService,
+    private val mapper: TaskMapper
+) {
 
     @GetMapping
     fun getAllTasks(): ResponseEntity<List<TaskResponse>> =
-        ResponseEntity(service.getAllTasks(), HttpStatus.OK)
+        ResponseEntity(
+            service.findAll().stream()
+                .map(mapper::toDto).collect(
+                    Collectors.toList()
+                ),
+            HttpStatus.OK
+        )
 
     @GetMapping("/open")
     fun getAllOpenTasks(): ResponseEntity<List<TaskResponse>> =
-        ResponseEntity(service.getAllOpenTasks(), HttpStatus.OK)
+        ResponseEntity(
+            service.getAllOpenTasks().stream()
+                .map(mapper::toDto).collect(
+                    Collectors.toList()
+                ),
+            HttpStatus.OK
+        )
 
     @GetMapping("/close")
     fun getAllClosedTasks(): ResponseEntity<List<TaskResponse>> =
-        ResponseEntity(service.getAllClosedTasks(), HttpStatus.OK)
+        ResponseEntity(
+            service.getAllClosedTasks().stream()
+                .map(mapper::toDto).collect(
+                    Collectors.toList()
+                ),
+            HttpStatus.OK
+        )
 
     @GetMapping("/{id}")
     fun getTaskById(@PathVariable id: Long): ResponseEntity<TaskResponse> =
-        ResponseEntity(service.getTaskById(id), HttpStatus.OK)
+        ResponseEntity(mapper.toDto(service.getTaskById(id)), HttpStatus.OK)
 
     @PostMapping
     fun createTask(
         @Valid @RequestBody createRequest: TaskRequest
-    ): ResponseEntity<TaskResponse> = ResponseEntity(service.createTask(createRequest), HttpStatus.CREATED)
+    ): ResponseEntity<TaskResponse> =
+        ResponseEntity(
+            mapper.toDto(service.create(mapper.toDomain(createRequest))),
+            HttpStatus.CREATED
+        )
 
     @PutMapping("/{id}")
     fun updateTask(
         @PathVariable id: Long,
-        @Valid @RequestBody updateRequest: TaskRequest
-    ): ResponseEntity<TaskResponse> = ResponseEntity(service.updateTask(id, updateRequest), HttpStatus.OK)
+        @Valid @RequestBody taskRequest: TaskRequest
+    ): ResponseEntity<TaskResponse> {
+        val task = mapper.toDomain(taskRequest)
+        val updatedTask = service.update(id, task)
+
+        return ResponseEntity(mapper.toDto(updatedTask), HttpStatus.OK)
+    }
 
     @DeleteMapping("/{id}")
     fun deleteTask(@PathVariable id: Long): ResponseEntity<String> =
-        ResponseEntity(service.deleteTask(id), HttpStatus.OK)
+        ResponseEntity(service.delete(id), HttpStatus.OK)
 
 }
