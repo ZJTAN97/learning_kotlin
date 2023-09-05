@@ -1,3 +1,26 @@
+# `var`, `val`
+
+- `var` can be reassigned
+- `val` cannot be reassigned
+
+```
+
+val name = "Docker"
+val age = 13
+
+println("the value of name is: $name and age: $age")
+
+```
+
+---
+
+# Decimal Numbers
+
+- `Float` uses less memory compared to `Double`
+- The precision of Float is only six or seven decimal digits, while Double variables have a precision of about 15 digits
+
+---
+
 # Data classes
 
 - main purpose is to hold data
