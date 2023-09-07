@@ -21,6 +21,25 @@ println("the value of name is: $name and age: $age")
 
 ---
 
+# Array and list
+
+to create array and list
+
+```
+
+val myArray = arrayOf(1, 2, 3)
+val myList = listof(1, 2, 3)
+val myMutableList = mutableListOf(1, 2, 3)
+
+myArray[0] = 3 // can change during runtime
+myList[0] = 3 // cannot be changed during runtime
+myMutableList[0] = 3 // can change during runtime
+
+```
+
+
+---
+
 # Data classes
 
 - main purpose is to hold data
