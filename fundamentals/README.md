@@ -37,6 +37,14 @@ myMutableList[0] = 3 // can change during runtime
 
 ```
 
+---
+
+
+# `when` keyword
+
+- Essentially the switch case of kotlin
+
+
 
 ---
 
