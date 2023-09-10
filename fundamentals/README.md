@@ -45,7 +45,6 @@ myMutableList[0] = 3 // can change during runtime
 - Essentially the switch case of kotlin
 
 
-
 ---
 
 # Data classes
