@@ -47,6 +47,14 @@ myMutableList[0] = 3 // can change during runtime
 
 ---
 
+# Visibility Modifiers
+
+- private: only visible to the inside of the class
+- protected: can pass down to sub-classes that inherit from super-class
+
+
+---
+
 # Data classes
 
 - main purpose is to hold data

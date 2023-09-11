@@ -3,17 +3,16 @@ class Rectangle(
     private val width: Double
 ) : Shape("Rectangle") {
 
+    var nameOfRectangle: String = ""
+
     init {
         println("Name of shape: $name")
         println("Rectangle created with length: $length and width: $width")
     }
 
-    fun area() = length * width
-
-    fun perimeter() = 2 * length + 2 * width
-
+    override fun area() = length * width
+    override fun perimeter() = 2 * length + 2 * width
     fun isSquare() = length == width
+    fun getActualArea() = this.area() * ratio
 
-
-    var nameOfRectangle: String = ""
 }
